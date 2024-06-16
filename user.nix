@@ -5,11 +5,15 @@
   users.users.trantorian = {
     isNormalUser = true;
     description = "trantorian";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "docker" "libvirtd" ];
     packages = with pkgs; [
       freetube
     ];
   };
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+  ];
 
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;

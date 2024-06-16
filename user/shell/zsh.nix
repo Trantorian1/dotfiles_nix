@@ -3,7 +3,7 @@ let
   # My shell aliases
   myAliases = {
     e = "exit";
-    nvim = "nix develop ~/Documents/code/rust/.dotfiles --command nvim -u ~/Documents/code/rust/.dotfiles/init.lua";
+    nvim = "nix develop ~/Documents/code/rust/.dotfiles --command neovide -- -u ~/Documents/code/rust/.dotfiles/init.lua";
   };
 in
 {
