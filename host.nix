@@ -43,6 +43,10 @@
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 
+  # Allows running dynamically linked executables from other platforms on nixos
+  # See https://github.com/Mic92/nix-ld for more details
+  programs.nix-ld.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

@@ -7,6 +7,7 @@
     ./hardware/rotation.nix
     ./hardware/sound.nix
     ./hardware/webcam.nix
+    ./hardware/xbox.nix
 
     ./wm/gnome.nix
   ];

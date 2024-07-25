@@ -2,7 +2,7 @@
 
 {
   imports = [
-    /* ./app/web/chromium.nix */
+    ./app/web/chromium.nix
     ./app/web/brave.nix
     ./app/web/proton-vpn.nix
 
