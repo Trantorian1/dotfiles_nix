@@ -24,6 +24,7 @@
      git
      xournalpp
      gnome.gnome-boxes
+     popcorntime
   ]) ++ (with pkgs.gnomeExtensions; [
      appindicator
   ]);

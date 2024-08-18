@@ -4,7 +4,7 @@ let
   myAliases = {
     e = "exit";
     nvim = "nix develop ~/Documents/code/rust/.dotfiles --command neovide -- -u ~/Documents/code/rust/.dotfiles/init.lua";
-    mdbook-open = "nix develop ~/Documents/code/rust/.dotfiles --command mdbook serve --open"
+    mdbook-open = "nix develop ~/Documents/code/rust/.dotfiles --command mdbook serve --open";
   };
 in
 {
