@@ -15,6 +15,10 @@
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   environment.shells = with pkgs; [ zsh ];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
