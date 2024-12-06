@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -39,10 +41,6 @@
     variant = "";
   };
 
-  # Set up ssh service
-  services.openssh.enable = true;
-  programs.ssh.startAgent = true;
-
   # Allows running dynamically linked executables from other platforms on nixos
   # See https://github.com/Mic92/nix-ld for more details
   programs.nix-ld.enable = true;
@@ -59,5 +57,5 @@
   system.stateVersion = "23.11"; # Did you read the comment?
 
   # Adds flake support
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 }
