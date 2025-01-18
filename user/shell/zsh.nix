@@ -1,17 +1,14 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   # My shell aliases
   myAliases = {
     e = "exit";
     nvim = "nix develop ~/Documents/code/.dotfiles --command neovide -- -u ~/Documents/code/.dotfiles/init.lua";
     mdbook-open = "nix develop ~/Documents/code/.dotfiles --command mdbook serve --open";
   };
-in
-{
-
+in {
   programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
+    autosuggestion.strategy = ["completion"];
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     shellAliases = myAliases;
@@ -20,5 +17,4 @@ in
       theme = "robbyrussell";
     };
   };
-
 }

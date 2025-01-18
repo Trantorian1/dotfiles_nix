@@ -10,7 +10,6 @@
     description = "trantorian";
     extraGroups = ["networkmanager" "wheel" "video" "docker" "libvirtd"];
     packages = with pkgs; [
-      libreoffice
       # Estonian e-identity
       qdigidoc
       web-eid-app
