@@ -14,6 +14,12 @@ return {
 					return vim.bo[buf].buftype == "help"
 				end,
 			},
+			{
+				ft = "neotest-summary",
+				pinned = true,
+				collapsed = true,
+				open = "Neotest summary",
+			},
 		},
 
 		options = {
@@ -30,4 +36,23 @@ return {
 		-- disable to always keep at least one edgy split visible in each open section
 		close_when_all_hidden = true,
 	},
+	keys = {
+		{
+			"<leader>ol",
+			function()
+				require("edgy").toggle("left")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "[O]pen [L]ight window",
+		},
+		{
+			"<leader>or",
+			function()
+				require("edgy").toggle("right")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "[O]pen [R]ight window",
+		},
+	},
 }
+-- vim: ts=2 sts=2 sw=2 et
