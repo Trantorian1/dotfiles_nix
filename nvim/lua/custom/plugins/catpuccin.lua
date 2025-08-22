@@ -17,6 +17,8 @@ return {
 				noice = true,
 				render_markdown = true,
 				which_key = true,
+				dap = true,
+				dap_ui = true,
 			},
 		})
 		vim.cmd.colorscheme("catppuccin-macchiato")

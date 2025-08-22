@@ -36,6 +36,7 @@ in
       rust
       mdbook
       mdbook-mermaid
+      lldb_21
 
       lua-language-server
       stylua
