@@ -1,4 +1,4 @@
-# Edit this configuration file to define what should be installed on
+# Edit this configuration file to define what should be installed onconfig
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
@@ -99,12 +99,17 @@ in {
     pulse.enable = true;
   };
 
+  # Enabling Docker
+  virtualisation.docker = {
+    enable = true;
+  };
+
   #  Setting up user with home-manager
   programs.fish.enable = true;
   users.users.trantorian = {
     isNormalUser = true;
     description = "trantorian";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     shell = pkgs.fish;
   };
 
@@ -158,6 +163,7 @@ in {
       '';
     };
 
+    # Replace ls with lsd
     programs.lsd = {
       enable = true;
       enableFishIntegration = true;
@@ -207,6 +213,29 @@ in {
           modified = "#df8e1d";
           conflicted = "#d20f39";
         };
+      };
+    };
+
+    # Install Ghostty
+    programs.ghostty = {
+      enable = true;
+      settings = {
+        theme = "dark:catppuccin-frappe,light:catppuccin-latte";
+        shell-integration = "fish";
+        cursor-style = "bar";
+        keybind = [
+          # Navigate splits
+          "alt+left=goto_split:left"
+          "alt+right=goto_split:right"
+          "alt+down=goto_split:down"
+          "alt+up=goto_split:up"
+
+          # New splits
+          "alt+shift+left=new_split:left"
+          "alt+shift+right=new_split:right"
+          "alt+shift+down=new_split:down"
+          "alt+shift+up=new_split:up"
+        ];
       };
     };
 
