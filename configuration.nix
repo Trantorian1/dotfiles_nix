@@ -260,7 +260,7 @@ in {
     programs.ghostty = {
       enable = true;
       settings = {
-        theme = "dark:catppuccin-frappe,light:catppuccin-latte";
+        theme = "dark:catppuccin-macchiato,light:catppuccin-latte";
         shell-integration = "fish";
         cursor-style = "bar";
         keybind = [
