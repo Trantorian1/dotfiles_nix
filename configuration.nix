@@ -122,6 +122,7 @@ in {
       shellAliases = {
         nvim = "nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command 'neovide --frame none -- -u $CONFIG/init.lua && exit'";
         e = "exit";
+        # ls = "lsd";
       };
       interactiveShellInit = ''
         # Disable the default greeting
@@ -140,7 +141,7 @@ in {
         set fish_color_gray 9ca0b0
         set fish_color_selection --background=ccd0da
         set fish_color_search_match --background=ccd0da
-        set fish_color_option 40a02b
+        set fish_color_option 40a02b;
         set fish_color_operator ea76cb
         set fish_color_escape e64553
         set fish_color_autosuggestion 9ca0b0
@@ -155,6 +156,58 @@ in {
         set fish_pager_color_completion 4c4f69
         set fish_pager_color_description 9ca0b0
       '';
+    };
+
+    programs.lsd = {
+      enable = true;
+      enableFishIntegration = true;
+      # https://github.com/catppuccin/lsd/blob/main/themes/catppuccin-latte/colors.yaml
+      colors = {
+        user = "#8839ef";
+        group = "#7287fd";
+        permission = {
+          read = "#40a02b";
+          write = "#df8e1d";
+          exec = "#e64553";
+          exec-sticky = "#8839ef";
+          no-access = "#6c6f85";
+          octal = "#179299";
+          acl = "#179299";
+          context = "#04a5e5";
+        };
+        date = {
+          hour-old = "#179299";
+          day-old = "#04a5e5";
+          older = "#209fb5";
+        };
+        size = {
+          none = "#6c6f85";
+          small = "#40a02b";
+          medium = "#df8e1d";
+          large = "#fe640b";
+        };
+        inode = {
+          valid = "#ea76cb";
+          invalid = "#6c6f85";
+        };
+        links = {
+          valid = "#ea76cb";
+          invalid = "#6c6f85";
+        };
+        tree-edge = "#5c5f77";
+        git-status = {
+          default = "#4c4f69";
+          unmodified = "#6c6f85";
+          ignored = "#6c6f85";
+          new-in-index = "#40a02b";
+          new-in-workdir = "#40a02b";
+          typechange = "#df8e1d";
+          deleted = "#d20f39";
+          renamed = "#40a02b";
+          modified = "#df8e1d";
+          conflicted = "#d20f39";
+        };
+      };
     };
 
     # Install Librewolf
