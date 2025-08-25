@@ -1,4 +1,7 @@
-{path}: let
+{
+  path,
+  rustVersion ? "1.86.0",
+}: let
   rustOverlay = import (builtins.fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz");
 
   sources = import ../npins;
@@ -9,7 +12,6 @@
     overlays = [rustOverlay];
   };
 
-  rustVersion = "1.89.0";
   rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
     extensions = [
       "rust-src"
