@@ -37,6 +37,46 @@ in {
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
+  # Remove default Gnome packages
+  # https://discourse.nixos.org/t/howto-disable-most-gnome-default-applications-and-what-they-are/13505
+  environment.gnome.excludePackages = with pkgs; [
+    baobab # disk usage analyzer
+    cheese # photo booth
+    eog # image viewer
+    epiphany # web browser
+    gedit # text editor
+    simple-scan # document scanner
+    totem # video player
+    yelp # help viewer
+    evince # document viewer
+    file-roller # archive manager
+    geary # email client
+    seahorse # password manager
+    snapshot # camera
+    decibels # audio player
+
+    # these should be self explanatory
+    gnome-shell
+    gnome-console
+    gnome-tour
+    gnome-calculator
+    gnome-calendar
+    gnome-characters
+    gnome-clocks
+    gnome-contacts
+    gnome-font-viewer
+    gnome-logs
+    gnome-maps
+    gnome-music
+    gnome-photos
+    gnome-screenshot
+    gnome-system-monitor
+    gnome-weather
+    gnome-disk-utility
+    gnome-connections
+    xterm
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
