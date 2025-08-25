@@ -60,10 +60,19 @@ vim.api.nvim_create_autocmd("VimEnter", {
 			vim.cmd("DiffviewOpen")
 
 			-- Third tab: terminal
+			--
+			-- We use a bit of a hacky shell script to load any nix flake or dev shell
+			-- before we start the terminal session. Its ugly but it works!
 			vim.cmd("tabnew")
-			vim.cmd("term")
+			vim.cmd(
+				'terminal nix develop --extra-experimental-features nix-command --extra-experimental-features flakes --command "clear && fish" || nix-shell --arg path $(pwd) --run "clear && fish" || clear && fish'
+			)
+			vim.cmd("file term1")
 			vim.cmd("vspl")
-			vim.cmd("term")
+			vim.cmd(
+				'terminal nix develop --extra-experimental-features nix-command --extra-experimental-features flakes --command "clear && fish" || nix-shell --arg path $(pwd) --run "clear && fish" || clear && fish'
+			)
+			vim.cmd("file term2")
 
 			-- Go back to first tab
 			vim.cmd("tabfirst")

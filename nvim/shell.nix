@@ -54,12 +54,13 @@ in
 
     RUST_BACKTRACE = 1;
     RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
-    LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.gcc.cc.lib
+      pkgs.openssl
+    ];
     LIBCLANG_PATH = pkgs.lib.makeLibraryPath [pkgs.llvmPackages_latest.libclang.lib];
 
     CONFIG = "${./.}";
-
-    TEST = "${path}";
 
     shellHook = ''
       export SHELL=$(which fish)
