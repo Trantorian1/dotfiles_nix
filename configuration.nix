@@ -165,41 +165,13 @@ in {
     programs.fish = {
       enable = true;
       shellAliases = {
-        nvim = "nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command 'neovide --frame none -- -u $CONFIG/init.lua && exit'";
+        nvim = "CMD='nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' nix develop --extra-experimental-features nix-command --extra-experimental-features flakes --command $CMD 2>/dev/null || nix-shell --arg path $(pwd) --run $CMD 2>/dev/null || fish -c $CMD 2>/dev/null";
         e = "exit";
         # ls = "lsd";
       };
       interactiveShellInit = ''
         # Disable the default greeting
         set fish_greeting
-
-        # https://github.com/catppuccin/fish/blob/main/themes/Catppuccin%20Latte.theme
-        set fish_color_normal 4c4f69
-        set fish_color_command 1e66f5
-        set fish_color_param dd7878
-        set fish_color_keyword d20f39
-        set fish_color_quote 40a02b
-        set fish_color_redirection ea76cb
-        set fish_color_end fe640b
-        set fish_color_comment 8c8fa1
-        set fish_color_error d20f39
-        set fish_color_gray 9ca0b0
-        set fish_color_selection --background=ccd0da
-        set fish_color_search_match --background=ccd0da
-        set fish_color_option 40a02b;
-        set fish_color_operator ea76cb
-        set fish_color_escape e64553
-        set fish_color_autosuggestion 9ca0b0
-        set fish_color_cancel d20f39
-        set fish_color_cwd df8e1d
-        set fish_color_user 179299
-        set fish_color_host 1e66f5
-        set fish_color_host_remote 40a02b
-        set fish_color_status d20f39
-        set fish_pager_color_progress 9ca0b0
-        set fish_pager_color_prefix ea76cb
-        set fish_pager_color_completion 4c4f69
-        set fish_pager_color_description 9ca0b0
       '';
     };
 
