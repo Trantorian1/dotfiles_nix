@@ -165,7 +165,7 @@ in {
     programs.fish = {
       enable = true;
       shellAliases = {
-        nvim = "CMD='nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' nix develop --extra-experimental-features nix-command --extra-experimental-features flakes --command $CMD 2>/dev/null || nix-shell --arg path $(pwd) --run $CMD 2>/dev/null || fish -c $CMD 2>/dev/null";
+        nvim = "nix develop --extra-experimental-features nix-command --extra-experimental-features flakes --command 'nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' 2>/dev/null || nix-shell --arg path $(pwd) --run 'nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' 2>/dev/null || fish -c 'nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' 2>/dev/null";
         e = "exit";
         # ls = "lsd";
       };
@@ -278,7 +278,7 @@ in {
         "places.history.enabled" = false;
 
         # Homepage
-        "browser.startup.homepage" = "https://discord.com/login|https://app.gather.town/signin|https://slack.com/signin#/signin|https://app.deel.com/login|https://app.rippling.com/sign-in/id|https://id.atlassian.com/login|https://claude.ai/login|https://account.proton.me/mail|https://account.proton.me/calendar|https://github.com/login|https://habitica.com/login|https://www.odoo.com/web/login|https://web.whatsapp.com/|https://web.telegram.org/|https://tidal.com/login/";
+        "browser.startup.homepage" = "https://discord.com/login|https://app.deel.com/login|https://app.rippling.com/sign-in/id|https://id.atlassian.com/login|https://claude.ai/login|https://account.proton.me/mail|https://account.proton.me/calendar|https://github.com/login|https://habitica.com/login|https://www.odoo.com/web/login|https://web.whatsapp.com/|https://web.telegram.org/|https://tidal.com/login/";
 
         # Use vertical tabs
         "sidebar.verticalTabs" = true;
