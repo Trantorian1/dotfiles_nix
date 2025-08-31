@@ -19,6 +19,16 @@
     ];
   };
 in
+  # TODO: it would be cool if we could turn this into an actual derivation.
+  # We can use `pkgs.writeShellApplication` to abstract away some of the
+  # complexities of calling Neovide, along with file sets (https://nix.dev/tutorials/working-with-local-files)
+  # to handle copying the lua source files into the nix store. There probably
+  # still is a lot of complexity I am not aware of, but that would be start in
+  # the right direction. Ideally we would like for it to be possible to bundle
+  # this config as a nix package, and maybe upload it to the nix store? Although
+  # given the nature of this as a personal work environment, I would feel more
+  # comfortable just hosting the code on github for something like `nix run` to
+  # pick up. We'll see :)
   pkgs.mkShell {
     packages = with pkgs; [
       busybox
