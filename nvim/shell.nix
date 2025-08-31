@@ -1,7 +1,4 @@
-{
-  path,
-  rustVersion ? "1.86.0",
-}: let
+{rustVersion ? "1.86.0"}: let
   rustOverlay = import (builtins.fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz");
 
   sources = import ../npins;
@@ -22,7 +19,7 @@
     ];
   };
 in
-  pkgs.mkShell rec {
+  pkgs.mkShell {
     packages = with pkgs; [
       busybox
       cacert
