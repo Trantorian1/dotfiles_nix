@@ -1,13 +1,10 @@
 return {
 	"akinsho/bufferline.nvim",
-	dependencies = {
-		"catppuccin/nvim",
-	},
+	lazy = false,
 	version = "*",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	opts = {
 		options = {
-
 			mode = "tabs",
 			indicator = "underline",
 			separator_style = "slant",

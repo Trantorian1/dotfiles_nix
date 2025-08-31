@@ -1,5 +1,7 @@
 return {
 	"f-person/auto-dark-mode.nvim",
+	lazy = true,
+	event = "VimEnter",
 	opts = {
 		set_dark_mode = function()
 			vim.cmd.colorscheme("catppuccin-macchiato")
