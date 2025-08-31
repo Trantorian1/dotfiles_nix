@@ -28,7 +28,9 @@ vim.keymap.set("n", "ss", "z=", { desc = "[S]pell [S]uggestions" })
 vim.keymap.set("n", "si", "zg", { desc = "[S]pell [I]gnore" })
 
 -- Set full screen in neovide
-local fullscreen = false
+local fullscreen = true
+vim.g.neovide_fullscreen = fullscreen
+
 vim.keymap.set("n", "<F11>", function()
 	fullscreen = not fullscreen
 	vim.g.neovide_fullscreen = fullscreen

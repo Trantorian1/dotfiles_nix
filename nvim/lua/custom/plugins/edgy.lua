@@ -5,7 +5,15 @@ return {
 		vim.opt.laststatus = 3
 		vim.opt.splitkeep = "screen"
 	end,
+	---@type Edgy.Config
 	opts = {
+		left = {
+			{ ft = "dapui_scopes" },
+			{ ft = "dapui_breakpoints" },
+			{ ft = "dapui_watches" },
+			{ ft = "dap-repl" },
+		},
+
 		right = {
 			{
 				ft = "help",
@@ -22,8 +30,14 @@ return {
 			},
 		},
 
+		bottom = {
+			{ ft = "dap_disassembly" },
+		},
+
 		options = {
+			left = { size = 50 },
 			right = { size = 90 },
+			bottom = { size = 15 },
 		},
 
 		animate = {

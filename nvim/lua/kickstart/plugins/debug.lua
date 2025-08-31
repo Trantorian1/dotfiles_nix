@@ -20,6 +20,18 @@ return {
 			desc = "Debugger: Start Session",
 		},
 		{
+			"<F6>",
+			function()
+				local dap = require("dap")
+				local dapui = require("dapui")
+
+				dap.disconnect()
+				dap.close()
+				dapui.close()
+			end,
+			desc = "Debugger: End Session",
+		},
+		{
 			"<F1>",
 			function()
 				require("dap").step_into()
@@ -48,11 +60,25 @@ return {
 			desc = "Debugger: Continue",
 		},
 		{
-			"<leader>dsa",
+			"<leader>dsi",
+			function()
+				require("dap").step_into()
+			end,
+			desc = "[D]ebugger: [S]tep [I]nto Assembly",
+		},
+		{
+			"<leader>dso",
 			function()
 				require("dap").step_over({ steppingGranularity = "instruction" })
 			end,
-			desc = "[D]ebugger: [S]tep Over [Assembly]",
+			desc = "[D]ebugger: [S]tep [O]ver Assembly",
+		},
+		{
+			"<leader>dsI",
+			function()
+				require("dap").step_out()
+			end,
+			desc = "[D]ebugger: [S]tep Out Assembly",
 		},
 		{
 			"<leader>b",
@@ -100,13 +126,6 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 
-		-- Usable screen height
-		local bottom = vim.o.cmdheight + (vim.o.laststatus == 3 and 1 or 0)
-		local top = (vim.o.showtabline == 2 or (vim.o.showtabline == 1 and #vim.api.nvim_list_tabpages() > 1)) and 1
-			or 0
-		local height = vim.o.lines - top - bottom
-		local width = vim.o.columns
-
 		dapui.setup({
 			controls = {
 				-- Disables clickable icons
@@ -133,7 +152,8 @@ return {
 						},
 					},
 					position = "left",
-					size = math.floor(width / 3),
+					-- This is set by Edgy anyway
+					size = 10,
 				},
 				{
 					elements = {
@@ -143,7 +163,8 @@ return {
 						},
 					},
 					position = "bottom",
-					size = math.floor(height / 4),
+					-- This is set by Edgy anyway
+					size = 10,
 				},
 			},
 		})
