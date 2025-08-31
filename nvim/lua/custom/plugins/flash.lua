@@ -8,6 +8,9 @@ return {
 				highlight = { backdrop = true },
 			},
 		},
+		jump = {
+			autojump = false,
+		},
 	},
 	keys = {
 		{
