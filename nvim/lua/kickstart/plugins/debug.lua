@@ -7,6 +7,9 @@ return {
 
 		-- Display field values during debugging sessions
 		"theHamsta/nvim-dap-virtual-text",
+
+		-- Disassembly view for nvim dapui
+		"Jorenar/nvim-dap-disasm",
 	},
 	keys = {
 		{
@@ -89,7 +92,6 @@ return {
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
-		local dapvirttext = require("nvim-dap-virtual-text")
 
 		-- Usable screen height
 		local bottom = vim.o.cmdheight + (vim.o.laststatus == 3 and 1 or 0)
@@ -98,8 +100,6 @@ return {
 		local height = vim.o.lines - top - bottom
 		local width = vim.o.columns
 
-		-- Dap UI setup
-		-- For more information, see |:help nvim-dap-ui|
 		dapui.setup({
 			controls = {
 				-- Disables clickable icons
@@ -117,11 +117,11 @@ return {
 							size = 0.25,
 						},
 						{
-							id = "stacks",
+							id = "watches",
 							size = 0.25,
 						},
 						{
-							id = "watches",
+							id = "repl",
 							size = 0.25,
 						},
 					},
@@ -131,7 +131,7 @@ return {
 				{
 					elements = {
 						{
-							id = "repl",
+							id = "disassembly",
 							size = 1,
 						},
 					},
@@ -140,7 +140,8 @@ return {
 				},
 			},
 		})
-		dapvirttext.setup({})
+
+		require("nvim-dap-virtual-text").setup({})
 
 		-- Change breakpoint icons
 		local breakpoint_icons = {
