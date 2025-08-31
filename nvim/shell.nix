@@ -34,21 +34,29 @@ in
       htop
       ripgrep
 
+      # Rust
       gnumake
       rust
       mdbook
       mdbook-mermaid
       lldb_21
+      taplo
 
+      # Nix
+      nil
+      alejandra
+
+      # Lua
       lua-language-server
       stylua
+
+      linuxPackages.perf
+      hotspot
 
       neovim
       neovide
       nerd-fonts.jetbrains-mono
 
-      alejandra
-      taplo
       nodePackages.fixjson
     ];
 
