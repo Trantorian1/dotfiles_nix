@@ -1,79 +1,89 @@
 -- debug.lua
---
--- Shows how to use the DAP plugin to debug your code.
---
--- Primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well. That's why it's called
--- kickstart.nvim and not kitchen-sink.nvim ;)
-
 return {
-	-- NOTE: Yes, you can install new plugins here!
 	"mfussenegger/nvim-dap",
-	-- NOTE: And you can specify dependencies as well
 	dependencies = {
 		-- Creates a beautiful debugger UI
 		"rcarriga/nvim-dap-ui",
 
+		-- Display field values during debugging sessions
 		"theHamsta/nvim-dap-virtual-text",
-
-		-- Required dependency for nvim-dap-ui
-		"nvim-neotest/nvim-nio",
-
-		-- Installs the debug adapters for you
-		"mason-org/mason.nvim",
-		"jay-babu/mason-nvim-dap.nvim",
 	},
 	keys = {
-		-- Basic debugging keymaps, feel free to change to your liking!
 		{
 			"<F5>",
 			function()
-				require("dap").continue()
+				vim.cmd.RustLsp("debug")
 			end,
-			desc = "Debug: Start/Continue",
+			desc = "Debugger: Start Session",
 		},
 		{
 			"<F1>",
 			function()
 				require("dap").step_into()
 			end,
-			desc = "Debug: Step Into",
+			desc = "Debugger: Step Into",
 		},
 		{
 			"<F2>",
 			function()
 				require("dap").step_over()
 			end,
-			desc = "Debug: Step Over",
+			desc = "Debugger: Step Over",
 		},
 		{
 			"<F3>",
 			function()
 				require("dap").step_out()
 			end,
-			desc = "Debug: Step Out",
+			desc = "Debugger: Step Out",
+		},
+		{
+			"<F4>",
+			function()
+				require("dap").continue()
+			end,
+			desc = "Debugger: Continue",
 		},
 		{
 			"<leader>b",
 			function()
 				require("dap").toggle_breakpoint()
 			end,
-			desc = "Debug: Toggle Breakpoint",
-		},
-		{
-			"<leader>B",
-			function()
-				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-			end,
-			desc = "Debug: Set Breakpoint",
+			desc = "[D]ebugger: Toggle [B]reakpoint",
 		},
 		-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
 		{
-			"<F7>",
+			"<leader>dui",
 			function()
 				require("dapui").toggle()
 			end,
-			desc = "Debug: See last session result.",
+			desc = "[D]ebugger: Toggle [UI]",
+		},
+		{
+			"<leader>dw",
+			function()
+				local snacks = require("snacks")
+				local dapui = require("dapui")
+
+				-- Gets the height of the current window
+				local win_height = vim.api.nvim_win_get_height(0)
+				local center = win_height / 2 - 1
+
+				print(center)
+
+				-- Opens a prompt for the user to enter a watch expression
+				local opts = {
+					icon = "󰈈",
+					prompt = "watch expression",
+					win = { style = "input", position = "float", row = center },
+				}
+				local on_confirm = function(input)
+					dapui.elements.watches.add(input)
+				end
+
+				snacks.input(opts, on_confirm)
+			end,
+			desc = "[D]ebugger: [W]atch expression",
 		},
 	},
 	config = function()
@@ -81,32 +91,58 @@ return {
 		local dapui = require("dapui")
 		local dapvirttext = require("nvim-dap-virtual-text")
 
+		-- Usable screen height
+		local bottom = vim.o.cmdheight + (vim.o.laststatus == 3 and 1 or 0)
+		local top = (vim.o.showtabline == 2 or (vim.o.showtabline == 1 and #vim.api.nvim_list_tabpages() > 1)) and 1
+			or 0
+		local height = vim.o.lines - top - bottom
+		local width = vim.o.columns
+
 		-- Dap UI setup
 		-- For more information, see |:help nvim-dap-ui|
 		dapui.setup({
-			-- Set icons to characters that are more likely to work in every terminal.
-			--    Feel free to remove or use ones that you like more! :)
-			--    Don't feel like these are good choices.
-			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
 			controls = {
-				icons = {
-					pause = "⏸",
-					play = "▶",
-					step_into = "⏎",
-					step_over = "⏭",
-					step_out = "⏮",
-					step_back = "b",
-					run_last = "▶▶",
-					terminate = "⏹",
-					disconnect = "⏏",
+				-- Disables clickable icons
+				enabled = false,
+			},
+			layouts = {
+				{
+					elements = {
+						{
+							id = "scopes",
+							size = 0.25,
+						},
+						{
+							id = "breakpoints",
+							size = 0.25,
+						},
+						{
+							id = "stacks",
+							size = 0.25,
+						},
+						{
+							id = "watches",
+							size = 0.25,
+						},
+					},
+					position = "left",
+					size = math.floor(width / 3),
+				},
+				{
+					elements = {
+						{
+							id = "repl",
+							size = 1,
+						},
+					},
+					position = "bottom",
+					size = math.floor(height / 4),
 				},
 			},
 		})
 		dapvirttext.setup({})
 
 		-- Change breakpoint icons
-		-- vim.api.nvim_set_hl(0, "DapBreak", { fg = "#e51400" })
-		-- vim.api.nvim_set_hl(0, "DapStop", { fg = "#ffcc00" })
 		local breakpoint_icons = {
 			Breakpoint = "",
 			BreakpointCondition = "",
@@ -120,6 +156,7 @@ return {
 			vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
 		end
 
+		-- Automatically open and close dapui
 		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
 		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 		dap.listeners.before.event_exited["dapui_config"] = dapui.close
