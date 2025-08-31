@@ -1,5 +1,21 @@
 {
   "pins": {
+    "catppuccin": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "catppuccin",
+        "repo": "nix"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v25.05",
+      "revision": "f825aa5c356409cf99f938f50785e22e9013267d",
+      "url": "https://api.github.com/repos/catppuccin/nix/tarball/v25.05",
+      "hash": "1bqlmml1455ixp0gb51yw6lrn16w272jcfzql0wmgblbxs1idvr5"
+    },
     "nixpkgs": {
       "type": "Git",
       "repository": {

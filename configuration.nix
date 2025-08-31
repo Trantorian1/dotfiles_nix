@@ -1,16 +1,7 @@
 # Edit this configuration file to define what should be installed onconfig
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
-  # Setup home manager
-  # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
-  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz;
-
+{config, ...}: let
   # Pin the version of nixpkgs being used
   sources = import ./npins;
   system = builtins.currentSystem;
@@ -24,57 +15,14 @@ in {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # Load home-manager
-    (import "${home-manager}/nixos")
+    ./nix/home_manager.nix
   ];
 
-  # Set home-manager to use the global nixpkgs
-  home-manager.useGlobalPkgs = true;
-  home-manager.backupFileExtension = "save";
   # Change nixos configuration path
   nix.nixPath = [
     "nixos-config=/home/trantorian/Documents/code/dotfiles/configuration.nix"
     "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "/nix/var/nix/profiles/per-user/root/channels"
-  ];
-
-  # Remove default Gnome packages
-  # https://discourse.nixos.org/t/howto-disable-most-gnome-default-applications-and-what-they-are/13505
-  environment.gnome.excludePackages = with pkgs; [
-    baobab # disk usage analyzer
-    cheese # photo booth
-    eog # image viewer
-    epiphany # web browser
-    gedit # text editor
-    simple-scan # document scanner
-    totem # video player
-    yelp # help viewer
-    evince # document viewer
-    file-roller # archive manager
-    geary # email client
-    seahorse # password manager
-    snapshot # camera
-    decibels # audio player
-
-    # these should be self explanatory
-    gnome-shell
-    gnome-console
-    gnome-tour
-    gnome-calculator
-    gnome-calendar
-    gnome-characters
-    gnome-clocks
-    gnome-contacts
-    gnome-font-viewer
-    gnome-logs
-    gnome-maps
-    gnome-music
-    gnome-photos
-    gnome-screenshot
-    gnome-system-monitor
-    gnome-weather
-    gnome-disk-utility
-    gnome-connections
-    xterm
   ];
 
   # Bootloader.
@@ -105,223 +53,36 @@ in {
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # Extra kernel modules
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    perf
+    v4l2loopback
+  ];
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # Enabling virtual camera for obs
+  boot.extraModprobeConfig = ''options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1'';
+  security.polkit.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # AMD graphics card support
-  boot.initrd.kernelModules = ["amdgpu"];
-  services.xserver.videoDrivers = ["amdgpu"];
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  # so perf can find kernel modules
+  # https://github.com/TUM-DSE/doctor-cluster-config/blob/fbc549f574c4d3b0031e94996814e135fe04822a/modules/tracing.nix#L7
+  systemd.tmpfiles.rules = [
+    "L /lib - - - - /run/current/system/lib"
+  ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   # Enabling Docker
   virtualisation.docker = {
     enable = true;
   };
 
-  #  Setting up user with home-manager
-  programs.fish.enable = true;
-  users.users.trantorian = {
-    isNormalUser = true;
-    description = "trantorian";
-    extraGroups = ["networkmanager" "wheel" "docker"];
-    shell = pkgs.fish;
-  };
-
-  home-manager.users.trantorian = {pkgs, ...}: {
-    home.packages = with pkgs; [
-      git
-      steam
-      lutris
-      protontricks
-    ];
-
-    # Set fish as the default shell
-    programs.fish = {
-      enable = true;
-      shellAliases = {
-        nvim = "nix develop --extra-experimental-features nix-command --extra-experimental-features flakes --command 'nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' 2>/dev/null || nix-shell --arg path $(pwd) --run 'nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'' 2>/dev/null || nix-shell /home/trantorian/Documents/code/dotfiles/nvim --arg path $(pwd) --command \'neovide --frame none -- -u $CONFIG/init.lua && exit\'";
-        e = "exit";
-        # ls = "lsd";
-      };
-      interactiveShellInit = ''
-        # Disable the default greeting
-        set fish_greeting
-      '';
-    };
-
-    # Replace ls with lsd
-    programs.lsd = {
-      enable = true;
-      enableFishIntegration = true;
-      # https://github.com/catppuccin/lsd/blob/main/themes/catppuccin-latte/colors.yaml
-      colors = {
-        user = "#8839ef";
-        group = "#7287fd";
-        permission = {
-          read = "#40a02b";
-          write = "#df8e1d";
-          exec = "#e64553";
-          exec-sticky = "#8839ef";
-          no-access = "#6c6f85";
-          octal = "#179299";
-          acl = "#179299";
-          context = "#04a5e5";
-        };
-        date = {
-          hour-old = "#179299";
-          day-old = "#04a5e5";
-          older = "#209fb5";
-        };
-        size = {
-          none = "#6c6f85";
-          small = "#40a02b";
-          medium = "#df8e1d";
-          large = "#fe640b";
-        };
-        inode = {
-          valid = "#ea76cb";
-          invalid = "#6c6f85";
-        };
-        links = {
-          valid = "#ea76cb";
-          invalid = "#6c6f85";
-        };
-        tree-edge = "#5c5f77";
-        git-status = {
-          default = "#4c4f69";
-          unmodified = "#6c6f85";
-          ignored = "#6c6f85";
-          new-in-index = "#40a02b";
-          new-in-workdir = "#40a02b";
-          typechange = "#df8e1d";
-          deleted = "#d20f39";
-          renamed = "#40a02b";
-          modified = "#df8e1d";
-          conflicted = "#d20f39";
-        };
-      };
-    };
-
-    # Install Ghostty
-    programs.ghostty = {
-      enable = true;
-      settings = {
-        theme = "dark:catppuccin-macchiato,light:catppuccin-latte";
-        shell-integration = "fish";
-        cursor-style = "bar";
-        keybind = [
-          # Navigate splits
-          "alt+left=goto_split:left"
-          "alt+right=goto_split:right"
-          "alt+down=goto_split:down"
-          "alt+up=goto_split:up"
-
-          # New splits
-          "alt+shift+left=new_split:left"
-          "alt+shift+right=new_split:right"
-          "alt+shift+down=new_split:down"
-          "alt+shift+up=new_split:up"
-        ];
-      };
-    };
-
-    # Install Librewolf
-    programs.librewolf = {
-      enable = true;
-      settings = {
-        # Enabling google safe browsing
-        # https://librewolf.net/docs/settings/#enable-google-safe-browsing
-        "browser.safebrowsing.malware.enabled" = true;
-        "browser.safebrowsing.phishing.enabled" = true;
-        "browser.safebrowsing.blockedURIs.enabled" = true;
-        "browser.safebrowsing.provider.google4.gethashURL" = "https://safebrowsing.googleapis.com/v4/fullHashes:find?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST";
-        "browser.safebrowsing.provider.google4.updateURL" = "https://safebrowsing.googleapis.com/v4/threatListUpdates:fetch?$ct=application/x-protobuf&key=%GOOGLE_SAFEBROWSING_API_KEY%&$httpMethod=POST";
-        "browser.safebrowsing.provider.google.gethashURL" = "https://safebrowsing.google.com/safebrowsing/gethash?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2";
-        "browser.safebrowsing.provider.google.updateURL" = "https://safebrowsing.google.com/safebrowsing/downloads?client=SAFEBROWSING_ID&appver=%MAJOR_VERSION%&pver=2.2&key=%GOOGLE_SAFEBROWSING_API_KEY%";
-        "browser.safebrowsing.downloads.enabled" = true;
-
-        # Do not restore tabs on crash
-        # https://librewolf.net/docs/settings/#stop-librewolf-from-resuming-after-a-crash
-        "browser.sessionstore.resume_from_crash" = false;
-
-        # Stricter autoplay prevention
-        # https://librewolf.net/docs/settings/#use-a-stricter-autoplay-policy
-        "media.autoplay.blocking_policy" = 2;
-
-        # Disable history
-        "places.history.enabled" = false;
-
-        # Homepage
-        "browser.startup.homepage" = "https://discord.com/login|https://app.deel.com/login|https://app.rippling.com/sign-in/id|https://id.atlassian.com/login|https://claude.ai/login|https://account.proton.me/mail|https://account.proton.me/calendar|https://github.com/login|https://habitica.com/login|https://www.odoo.com/web/login|https://web.whatsapp.com/|https://web.telegram.org/|https://tidal.com/login/";
-
-        # Use vertical tabs
-        "sidebar.verticalTabs" = true;
-
-        # Default extensions
-        "browser.policies.runOncePerModification.extensionsInstall" = ''
-          [
-            "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
-            "https://addons.mozilla.org/firefox/downloads/latest/proton-pass/latest.xpi"
-            "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi"
-          ]
-        '';
-      };
-    };
-
-    # Setting up git
-    programs.git = {
-      enable = true;
-      userName = "trantorian";
-      userEmail = "114066155+Trantorian1@users.noreply.github.com";
-      extraConfig = {
-        core = {
-          pager = "";
-          editor = "nvim";
-        };
-      };
-    };
-
-    #  Setting up ssh authentication
-    programs.ssh = {
-      enable = true;
-      matchBlocks = {
-        github = {
-          hostname = "github.com";
-          identityFile = "~/.ssh/github";
-        };
-      };
-    };
-
-    # The state version is required and should stay at the version you
-    # originally installed.
-    home.stateVersion = "25.05";
-  };
+  # Enabling nix-ld to run dynamically linked executables (this is useful for dev purposes)
+  # https://nix.dev/guides/faq#how-to-run-non-nix-executables
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    elfutils
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
