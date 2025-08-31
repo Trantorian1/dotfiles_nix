@@ -21,6 +21,12 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" }
 vim.keymap.set("n", "<S-s>", "<C-e>", { desc = "Scroll down" })
 vim.keymap.set("n", "<S-w>", "<C-y>", { desc = "Scroll down" })
 
+-- Spellchecking
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
+vim.keymap.set("n", "ss", "z=", { desc = "[S]pell [S]uggestions" })
+vim.keymap.set("n", "si", "zg", { desc = "[S]pell [I]gnore" })
+
 -- Set full screen in neovide
 local fullscreen = false
 vim.keymap.set("n", "<F11>", function()
@@ -65,9 +71,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
 			-- before we start the terminal session. Its ugly but it works!
 			vim.cmd("tabnew")
 			vim.cmd("term")
+			vim.cmd("set nospell")
 			vim.cmd("file term1")
 			vim.cmd("vspl")
 			vim.cmd("term")
+			vim.cmd("set nospell")
 			vim.cmd("file term2")
 
 			-- Go back to first tab
