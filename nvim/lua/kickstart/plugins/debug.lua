@@ -48,6 +48,13 @@ return {
 			desc = "Debugger: Continue",
 		},
 		{
+			"<leader>dsa",
+			function()
+				require("dap").step_over({ steppingGranularity = "instruction" })
+			end,
+			desc = "[D]ebugger: [S]tep Over [Assembly]",
+		},
+		{
 			"<leader>b",
 			function()
 				require("dap").toggle_breakpoint()
