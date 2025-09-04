@@ -25,6 +25,9 @@ in {
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
+  # Enable flakes
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

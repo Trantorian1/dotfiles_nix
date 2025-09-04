@@ -13,9 +13,9 @@
     extraConfig.pipewire = {
       "context.properties" = {
         "default.clock.rate" = 48000;
-        "default.clock.quantum" = 2048;
-        "default.clock.min-quantum" = 2048;
-        "default.clock.force-quantum" = 2048;
+        "default.clock.quantum" = 1024;
+        "default.clock.min-quantum" = 1024;
+        "default.clock.force-quantum" = 1024;
       };
     };
   };
