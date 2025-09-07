@@ -31,7 +31,7 @@ in
   # pick up. We'll see :)
   pkgs.mkShell {
     packages = with pkgs; [
-      busybox
+      # busybox
       cacert
       pkg-config
       openssl
@@ -40,6 +40,7 @@ in
       fish
       htop
       ripgrep
+      unixtools.xxd
 
       # Rust
       gnumake
