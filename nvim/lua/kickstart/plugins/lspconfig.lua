@@ -199,6 +199,15 @@ return {
 			-- Enabling LSPs using the `vim.lsp` API from neovim 0.11.+
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("nil_ls")
+			vim.lsp.enable("ts_ls")
+			vim.lsp.enable("yamlls")
+
+			vim.lsp.config("ts_ls", {
+				settings = {
+					typescript = { preferences = { preferGoToSourceDefinition = true } },
+					javascript = { preferences = { preferGoToSourceDefinition = true } },
+				},
+			})
 		end,
 	},
 }

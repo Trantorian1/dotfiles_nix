@@ -58,6 +58,15 @@ in
       lua-language-server
       stylua
 
+      # TS
+      typescript
+      typescript-language-server
+      prettierd
+      nodePackages.prettier
+
+      # yaml
+      yaml-language-server
+
       linuxPackages.perf
       hotspot
 
