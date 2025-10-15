@@ -17,7 +17,6 @@ return {
 			},
 		})
 	end,
-	lazy = true,
 	cmd = "Neotest",
 	keys = {
 		{
@@ -25,24 +24,28 @@ return {
 			function()
 				require("neotest").run.run()
 			end,
-			-- mode = { "n", "x", "o" },
-			-- desc = "[T]est [R]un",
+			{ desc = "[T]est [R]un" },
 		},
 		{
 			"<leader>tf",
 			function()
 				require("neotest").run.run(vim.fn.expand("%"))
 			end,
-			-- mode = { "n", "x", "o" },
-			-- desc = "[T]est [F]ile",
+			{ desc = "[T]est [F]ile" },
 		},
 		{
 			"<leader>ts",
 			function()
 				require("neotest").run.stop(vim.fn.expand("%"))
 			end,
-			-- mode = { "n", "x", "o" },
-			-- desc = "[T]est [S]top",
+			{ desc = "[T]est [S]top" },
+		},
+		{
+			"<leader>to",
+			function()
+				require("neotest").summary.toggle()
+			end,
+			{ desc = "[T]est [O]utline" },
 		},
 	},
 }
