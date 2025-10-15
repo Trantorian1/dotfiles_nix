@@ -36,6 +36,7 @@ in {
       ./user/ssh.nix
       ./user/ghostty.nix
       ./user/librewolf.nix
+      ./user/libreoffice.nix
       ./user/brave.nix
       ./user/steam.nix
       ./user/minecraft.nix
