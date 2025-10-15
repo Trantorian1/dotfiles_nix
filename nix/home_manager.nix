@@ -38,6 +38,7 @@ in {
       ./user/librewolf.nix
       ./user/brave.nix
       ./user/steam.nix
+      ./user/minecraft.nix
     ];
 
     # The state version is required and should stay at the version you
