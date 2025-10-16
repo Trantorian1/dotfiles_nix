@@ -34,6 +34,7 @@
     gnome-screenshot
     gnome-system-monitor
     gnome-weather
+    gnome-text-editor
     gnome-disk-utility
     gnome-connections
     xterm
