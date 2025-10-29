@@ -3,6 +3,8 @@ return {
 	main = "treesitter-context",
 	opts = {
 		enable = true,
+		multiwindow = true,
+		max_lines = 7,
 	},
 	lazy = true,
 	event = "BufEnter",
