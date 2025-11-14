@@ -86,4 +86,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
+-- Formats zig files on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*.zig",
+	callback = function()
+		vim.cmd("silent %!zig fmt --stdin")
+	end,
+})
+
 -- vim: ts=2 sts=2 sw=2 et
