@@ -10,6 +10,7 @@ in {
     ./gnome.nix
     ./amd.nix
     ./audio.nix
+    ./zig.nix
   ];
 
   # Set home-manager to use the global nixpkgs
