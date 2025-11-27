@@ -76,6 +76,8 @@ in
       nerd-fonts.jetbrains-mono
 
       nodePackages.fixjson
+
+      exercism
     ];
 
     RUST_BACKTRACE = 1;
