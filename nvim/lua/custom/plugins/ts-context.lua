@@ -4,7 +4,7 @@ return {
 	opts = {
 		enable = true,
 		multiwindow = true,
-		max_lines = 7,
+		max_lines = 5,
 	},
 	lazy = true,
 	event = "BufEnter",

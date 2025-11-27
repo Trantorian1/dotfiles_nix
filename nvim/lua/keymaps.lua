@@ -90,7 +90,20 @@ vim.api.nvim_create_autocmd("VimEnter", {
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*.zig",
 	callback = function()
-		vim.cmd("silent %!zig fmt --stdin")
+		local view = vim.fn.winsaveview()
+		local buf_content = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+
+		local result = vim.fn.system("zig fmt --stdin", buf_content)
+
+		if vim.v.shell_error == 0 then
+			-- Formatting succeeded, replace buffer
+			local lines = vim.split(result, "\n", { plain = true })
+			vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+			vim.fn.winrestview(view)
+		else
+			-- Formatting failed, show error but keep buffer unchanged
+			vim.notify("zig fmt failed:\n" .. result, vim.log.levels.ERROR)
+		end
 	end,
 })
 
