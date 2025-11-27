@@ -41,6 +41,7 @@ in {
       ./user/brave.nix
       ./user/steam.nix
       ./user/minecraft.nix
+      ./user/discord.nix
     ];
 
     # The state version is required and should stay at the version you
