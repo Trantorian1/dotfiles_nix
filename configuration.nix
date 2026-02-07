@@ -1,12 +1,7 @@
 {config, ...}: let
   # Pin the version of nixpkgs being used
   sources = import ./npins;
-  system = builtins.currentSystem;
-  pkgs = import sources.nixpkgs {
-    inherit system;
-    config = {};
-    overlays = [];
-  };
+  pkgs = import sources.nixpkgs {config.allowUnfree = true;};
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -15,11 +10,12 @@ in {
     ./nix/home_manager.nix
   ];
 
+  nixpkgs.pkgs = pkgs;
+
   # Change nixos configuration path
   nix.nixPath = [
     "nixos-config=/home/trantorian/Documents/code/dotfiles/configuration.nix"
-    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-    "/nix/var/nix/profiles/per-user/root/channels"
+    "nixpkgs=${sources.nixpkgs}"
   ];
 
   # Enable flakes
@@ -85,7 +81,7 @@ in {
   ];
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

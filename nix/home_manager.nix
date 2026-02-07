@@ -1,15 +1,8 @@
-{...}: let
+{pkgs, ...}: let
   # Setup home manager
   # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-
   sources = import ../npins;
-  system = builtins.currentSystem;
-  pkgs = import sources.nixpkgs {
-    inherit system;
-    config = {};
-    overlays = [];
-  };
 in {
   imports = [
     (import "${home-manager}/nixos")

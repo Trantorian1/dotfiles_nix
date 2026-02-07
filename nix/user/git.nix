@@ -2,9 +2,11 @@
   # Setting up git
   programs.git = {
     enable = true;
-    userName = "trantorian";
-    userEmail = "114066155+Trantorian1@users.noreply.github.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "trantorian";
+        email = "114066155+Trantorian1@users.noreply.github.com";
+      };
       core = {
         pager = "";
         editor = "nvim";
