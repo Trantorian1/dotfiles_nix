@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed onconfig
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 {config, ...}: let
   # Pin the version of nixpkgs being used
   sources = import ./npins;

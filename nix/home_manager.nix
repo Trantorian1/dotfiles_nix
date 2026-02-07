@@ -1,9 +1,15 @@
-{pkgs, ...}: let
+{...}: let
   # Setup home manager
   # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 
   sources = import ../npins;
+  system = builtins.currentSystem;
+  pkgs = import sources.nixpkgs {
+    inherit system;
+    config = {};
+    overlays = [];
+  };
 in {
   imports = [
     (import "${home-manager}/nixos")
@@ -42,6 +48,7 @@ in {
       ./user/steam.nix
       ./user/minecraft.nix
       ./user/discord.nix
+      ./user/vlc.nix
     ];
 
     # The state version is required and should stay at the version you

@@ -68,7 +68,7 @@ in
       # yaml
       yaml-language-server
 
-      linuxPackages.perf
+      perf
       hotspot
 
       neovim

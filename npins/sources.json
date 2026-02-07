@@ -11,23 +11,16 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v25.05",
-      "revision": "f825aa5c356409cf99f938f50785e22e9013267d",
-      "url": "https://api.github.com/repos/catppuccin/nix/tarball/v25.05",
-      "hash": "1bqlmml1455ixp0gb51yw6lrn16w272jcfzql0wmgblbxs1idvr5"
+      "version": "v25.11",
+      "revision": "c1dc9a10164c6ff987fb70570bd9ba58f192b8bf",
+      "url": "https://api.github.com/repos/catppuccin/nix/tarball/v25.11",
+      "hash": "07x6wna7nxbqlgnvcyck24lfvhh1z600s39sr6dlydhaxk5g0326"
     },
     "nixpkgs": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nixos",
-        "repo": "nixpkgs"
-      },
-      "branch": "nixos-25.05",
-      "submodules": false,
-      "revision": "ad7196ae55c295f53a7d1ec39e4a06d922f3b899",
-      "url": "https://github.com/nixos/nixpkgs/archive/ad7196ae55c295f53a7d1ec39e4a06d922f3b899.tar.gz",
-      "hash": "1dm1sm9bz2q6ldngqqbkis92ikwiyz0i8wn6f3gqmibzgad2fcmd"
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre940249.00c21e4c93d9/nixexprs.tar.xz",
+      "hash": "0zmmghaihnsmxdiig5fymah4xy6k2s0s423v69bp0id4gbj8r77h"
     }
   },
   "version": 5
