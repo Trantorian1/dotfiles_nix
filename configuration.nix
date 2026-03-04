@@ -49,7 +49,8 @@ in {
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  # Extra kernel modules
+  # Kernel configuration
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = with config.boot.kernelPackages; [
     perf
     v4l2loopback

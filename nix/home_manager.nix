@@ -39,9 +39,10 @@ in {
       ./user/libreoffice.nix
       ./user/brave.nix
       ./user/steam.nix
-      ./user/minecraft.nix
       ./user/discord.nix
+      ./user/notes.nix
       ./user/vlc.nix
+      ./user/kubernetes.nix
     ];
 
     # The state version is required and should stay at the version you
