@@ -43,6 +43,7 @@ in {
       ./user/notes.nix
       ./user/vlc.nix
       ./user/kubernetes.nix
+      ./user/signal.nix
     ];
 
     # The state version is required and should stay at the version you
