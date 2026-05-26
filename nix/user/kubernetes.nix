@@ -4,5 +4,6 @@
     kubectl
     k9s
     kubelogin
+    kubernetes-helm
   ];
 }

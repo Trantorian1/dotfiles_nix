@@ -70,8 +70,9 @@ in {
   services.printing.enable = true;
 
   # Enabling Docker
-  virtualisation.docker = {
+  virtualisation.docker.rootless = {
     enable = true;
+    setSocketVariable = true;
   };
 
   # Enabling nix-ld to run dynamically linked executables (this is useful for dev purposes)

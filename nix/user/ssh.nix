@@ -4,8 +4,9 @@
     enable = true;
     matchBlocks = {
       github = {
-        hostname = "github.com";
+        hostname = "ssh.github.com";
         identityFile = "~/.ssh/github";
+        port = 443;
       };
     };
   };

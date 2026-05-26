@@ -2,6 +2,7 @@
   # Setting up git
   programs.git = {
     enable = true;
+
     settings = {
       user = {
         name = "trantorian";
@@ -11,6 +12,9 @@
         pager = "";
         editor = "nvim";
       };
+    };
+    extraConfig = {
+      credential.helper = "store --file ~/.git-credentials";
     };
   };
 }
