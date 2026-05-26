@@ -1,4 +1,4 @@
-{rustVersion ? "1.90.0"}: let
+{rustVersion ? "1.95.0"}: let
   rustOverlay = import (builtins.fetchTarball "https://github.com/oxalica/rust-overlay/archive/master.tar.gz");
 
   sources = import ../npins;
