@@ -14,14 +14,27 @@
       "version": "v25.11",
       "revision": "c1dc9a10164c6ff987fb70570bd9ba58f192b8bf",
       "url": "https://api.github.com/repos/catppuccin/nix/tarball/v25.11",
-      "hash": "07x6wna7nxbqlgnvcyck24lfvhh1z600s39sr6dlydhaxk5g0326"
+      "hash": "sha256-RgzwyuwKNk+byToNDYD5AcLtKBGTebbto3h1e5Tlph8="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "release-25.11",
+      "submodules": false,
+      "revision": "3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f",
+      "url": "https://github.com/nix-community/home-manager/archive/3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f.tar.gz",
+      "hash": "sha256-QOD/CNm196nCJRheux/URi4/HE66fthdOMqCJoPP1Y0="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
       "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre940249.00c21e4c93d9/nixexprs.tar.xz",
-      "hash": "0zmmghaihnsmxdiig5fymah4xy6k2s0s423v69bp0id4gbj8r77h"
+      "hash": "sha256-8JyM5HqkRXBXMnsIooEW0/hOoKrelRdj61VbGBV8tX4="
     }
   },
-  "version": 5
+  "version": 7
 }
